@@ -1,6 +1,8 @@
 import numpy as np
 
 #question 1
+#this question works to create a eueler function and then insert
+#the needed numbers from the problem
 def euler(function, y, t0, tf, n):
     h = (tf - t0) / n
     solution = [(t0, y)]
@@ -21,6 +23,8 @@ print()
 
 
 #question 2
+#this function uses a runge function to find the answer and then 
+#inputs the needed numbers 
 def runge(f, y0, t0, tf, n):
 
     h = (tf - t0) / n
