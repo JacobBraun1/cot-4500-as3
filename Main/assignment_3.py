@@ -1,23 +1,20 @@
 import numpy as np
 
 #question 1
-def euler_method(f, y0, t0, tf, n):
-
- 
+def euler(function, y, t0, tf, n):
     h = (tf - t0) / n
-    t, y = t0, y0
-    solution = [(t, y)]
+    solution = [(t0, y)]
     for i in range(n):
-        y = y + h * f(t, y)
-        t = t + h
-        solution.append((t, y))
+        y = y + h * function(t0, y)
+        t0 = t0 + h
+        solution.append((t0, y))
     return solution
 
 def f(t, y):
     return t - y**2
 
 #output 1
-solution = euler_method(f, y0=1, t0=0, tf=2, n=10)
+solution = euler(f, 1, 0, 2, 10)
 t,y=solution[-1]
 print(y)
 print()
@@ -97,7 +94,6 @@ print()
 
 #question 5
 A = np.array([[9, 0, 5, 2, 1], [3, 9, 1, 2, 1], [0, 1, 7, 2, 3],[4, 2, 3, 12, 2],[3, 2, 4, 0, 8]])
-
 diagnol_abs = np.abs(np.diag(A))
 diagnol_abs_2 = np.abs(A) - np.diag(diagnol_abs)
 diagnol = np.all(diagnol_abs >= np.sum(diagnol_abs_2, axis=1))
@@ -108,7 +104,6 @@ print()
 
 #question 6
 A = np.array([[2, 2, 1],[2, 3, 0],[1, 0, 2]])
-
 eigvals = np.linalg.eigvals(A)
 
 #output 6
