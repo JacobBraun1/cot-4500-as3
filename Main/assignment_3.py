@@ -3,17 +3,16 @@ import numpy as np
 #question 1
 #this question works to create a eueler function and then insert
 #the needed numbers from the problem
+def f(t, y):
+    return t - y**2
 def euler(function, y, t0, tf, n):
-    h = (tf - t0) / n
     solution = [(t0, y)]
+    h = (tf - t0) / n
     for i in range(n):
         y = y + h * function(t0, y)
         t0 = t0 + h
         solution.append((t0, y))
     return solution
-
-def f(t, y):
-    return t - y**2
 
 #output 1
 solution = euler(f, 1, 0, 2, 10)
@@ -26,18 +25,16 @@ print()
 #this function uses a runge function to find the answer and then 
 #inputs the needed numbers 
 def runge(f, y0, t0, tf, n):
-
-    h = (tf - t0) / n
-    t, y = t0, y0
-    solution = [(t, y)]
+    solution = [(t0, y0)]
+    j = (tf - t0) / n
     for i in range(n):
-        k1 = h * f(t, y)
-        k2 = h * f(t + h/2, y + k1/2)
-        k3 = h * f(t + h/2, y + k2/2)
-        k4 = h * f(t + h, y + k3)
-        y = y + (k1 + 2*k2 + 2*k3 + k4) / 6
-        t = t + h
-        solution.append((t, y))
+        l1 = j * f(t0, y0)
+        l2 = j * f(t0 + j/2, y0 + l1/2)
+        l3 = j * f(t0 + j/2, y0 + l2/2)
+        l4 = j * f(t0 + j, y0 + l3)
+        y0 = y0 + (l1 + 2*l2 + 2*l3 + l4) / 6
+        t0 = t0 + j
+        solution.append((t0, y0))
     return solution
 
 #output 2
@@ -53,8 +50,6 @@ for i in range(A.shape[0]):
     pivot_row = i
     while A[pivot_row, i] == 0:
         pivot_row += 1
-        if pivot_row == A.shape[0]:
-            raise ValueError("Matrix is singular")
     
     A[[i, pivot_row]] = A[[pivot_row, i]]
     
