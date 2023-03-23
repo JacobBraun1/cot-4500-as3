@@ -24,14 +24,14 @@ print()
 #question 2
 #this function uses a runge function to find the answer and then 
 #inputs the needed numbers 
-def runge(f, y0, t0, tf, n):
+def runge(function, y0, t0, tf, n):
     solution = [(t0, y0)]
     j = (tf - t0) / n
     for i in range(n):
-        l1 = j * f(t0, y0)
-        l2 = j * f(t0 + j/2, y0 + l1/2)
-        l3 = j * f(t0 + j/2, y0 + l2/2)
-        l4 = j * f(t0 + j, y0 + l3)
+        l1 = j * function(t0, y0)
+        l2 = j * function(t0 + j/2, y0 + l1/2)
+        l3 = j * function(t0 + j/2, y0 + l2/2)
+        l4 = j * function(t0 + j, y0 + l3)
         y0 = y0 + (l1 + 2*l2 + 2*l3 + l4) / 6
         t0 = t0 + j
         solution.append((t0, y0))
@@ -44,6 +44,7 @@ print(y)
 print()
 
 #question 3
+# hard coded solution of gaussian elimation for solving linear system
 A = np.array([[2, -1, 1, 6], [1, 3, 1, 0], [-1, 5, 4, -3]])
 
 for i in range(A.shape[0]):
@@ -70,6 +71,7 @@ print("]",end="\n")
 print()
 
 #question 4
+#hard coded solution for LU factorization 
 A = np.array([[1.0, 1.0, 0.0, 3.0], [2.0, 1.0, -1.0, 1.0], [3.0, -1.0, -1.0, 2.0], [-1.0, 2.0, 3.0, -1.0]])
 L = np.eye(A.shape[0])
 U = np.zeros_like(A)
@@ -92,6 +94,7 @@ print(U)
 print()
 
 #question 5
+#hard coded solution solving for a diangolally dominante matrix 
 A = np.array([[9, 0, 5, 2, 1], [3, 9, 1, 2, 1], [0, 1, 7, 2, 3],[4, 2, 3, 12, 2],[3, 2, 4, 0, 8]])
 diagnol_abs = np.abs(np.diag(A))
 diagnol_abs_2 = np.abs(A) - np.diag(diagnol_abs)
@@ -102,8 +105,9 @@ print("True") if diagnol else print("False")
 print()
 
 #question 6
+# hard coded solution for a matrix if positive definite 
 A = np.array([[2, 2, 1],[2, 3, 0],[1, 0, 2]])
-eigvals = np.linalg.eigvals(A)
+eigenvalues = np.linalg.eigvals(A)
 
 #output 6
-print("True") if np.all(eigvals > 0) else print("False")
+print("True") if np.all(eigenvalues > 0) else print("False")
