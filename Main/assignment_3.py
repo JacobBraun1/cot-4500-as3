@@ -5,6 +5,7 @@ import numpy as np
 #the needed numbers from the problem
 def f(t, y):
     return t - y**2
+
 def euler(function, y, t0, tf, n):
     solution = [(t0, y)]
     h = (tf - t0) / n
@@ -17,7 +18,7 @@ def euler(function, y, t0, tf, n):
 #output 1
 solution = euler(f, 1, 0, 2, 10)
 t,y=solution[-1]
-print(y)
+print('%.5f'% y)
 print()
 
 
@@ -40,34 +41,27 @@ def runge(function, y0, t0, tf, n):
 #output 2
 solution = runge(f, 1, 0, 2, 10)
 t,y=solution[-1]
-print(y)
+print('%.5f'% y)
 print()
 
 #question 3
 # hard coded solution of gaussian elimation for solving linear system
-A = np.array([[2, -1, 1, 6], [1, 3, 1, 0], [-1, 5, 4, -3]])
+A = np.array([[2, -1, 1, 6], [1, 3, 1, 0], [-1, 5, 4, -3]], dtype=np.double)
 
-for i in range(A.shape[0]):
-    pivot_row = i
-    while A[pivot_row, i] == 0:
-        pivot_row += 1
-    
-    A[[i, pivot_row]] = A[[pivot_row, i]]
-    
-    for j in range(i+1, A.shape[0]):
-        factor = A[j, i] / A[i, i]
-        A[j, i:] = A[j, i:] - factor * A[i, i:]
+for n in range(A.shape[0]):
+    max = n + np.argmax(np.abs(A[n:, n]))
+    A[[n, max]] = A[[max, n]]
+    for m in range(n + 1, A.shape[0]):
+        factor = A[m, n] / A[n, n]
+        A[m, n:] = A[m, n:] - factor * A[n, n:]
 
-x = np.zeros(A.shape[0])
-for i in range(A.shape[0]-1, -1, -1):
-    x[i] = (A[i, -1] - np.dot(A[i, i:-1], x[i:])) / A[i, i]
+sol = np.zeros(A.shape[0])
+for n in range(A.shape[0] - 1, -1, -1):
+    sol[n] = (A[n, -1] - np.dot(A[n, :-1], sol)) / A[n, n]
+sol = sol.astype(dtype=np.double)
 
 #output 3
-ans=[]
-print("[",end =" ")
-for i in range(len(x)):
-    print(int(x[i]),end =" ")
-print("]",end="\n")
+print(sol)
 print()
 
 #question 4
@@ -85,8 +79,7 @@ for i in range(A.shape[0]):
 
 
 #output 4
-determinite_A = np.prod(np.diag(U))-0.00000000001
-print(determinite_A)
+print('%.5f'% np.prod(np.diag(U))) #determinite of a
 print()
 print(L)
 print()
